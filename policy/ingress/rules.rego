@@ -5,6 +5,9 @@ package policy.ingress
 default allow = false
 
 allow {
-  input.attributes.request.http.method == "GET"
   input.parsed_path[0] == "asd"
+}
+
+allow {
+	input.parsed_path[0] == "health"
 }
