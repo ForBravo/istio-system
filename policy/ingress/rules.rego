@@ -4,7 +4,6 @@ package policy.ingress
 
 default allow = false
 
-
 jwks_request(url) := http.send({
     "url": url,
     "method": "GET",
@@ -46,7 +45,12 @@ allow {
 }
 
 allow {
-  input.parsed_path[0] == "private"
+  input.parsed_path[0] == "private1"
+  claims.aud == "https://nigel-test-rba.us.auth0.com/api/v2/"
+}
+
+allow {
+  input.parsed_path[0] == "private2"
   claims.aud == "https://nigel-test-rba.us.auth0.com/api/v2/1"
 }
 
