@@ -4,7 +4,7 @@ package policy.ingress
 
 default allow = false
 
-jwks_request(url) := http.send({
+jwks_request(url) = http.send({
     "url": url,
     "method": "GET",
     "force_cache": true,
