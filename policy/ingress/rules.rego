@@ -4,14 +4,14 @@ package policy.ingress
 
 default allow = false
 
-jwks_request(url) = http.send({
-    "url": url,
-    "method": "GET",
-    "force_cache": true,
-    "force_cache_duration_seconds": 3600 # Cache response for an hour
-})
-
-jwks := jwks_request("https://nigel-test-rba.us.auth0.com/.well-known/jwks.json").raw_body
+# jwks_request(url) = http.send({
+#     "url": url,
+#     "method": "GET",
+#     "force_cache": true,
+#     "force_cache_duration_seconds": 3600 # Cache response for an hour
+# })
+# 
+# jwks := jwks_request("https://nigel-test-rba.us.auth0.com/.well-known/jwks.json").raw_body
 
 # jwks :=`{
 #     "keys": [
@@ -42,6 +42,8 @@ jwks := jwks_request("https://nigel-test-rba.us.auth0.com/.well-known/jwks.json"
 #     ]
 # }`
 
+jwks := json.marshal(data.jwks.jwks)
+
 bearer_token := t {
 	# Bearer tokens are contained inside of the HTTP Authorization header. This rule
 	# parses the header and extracts the Bearer token value. If no Bearer token is
@@ -49,6 +51,7 @@ bearer_token := t {
 	v := input.attributes.request.http.headers.authorization
 	startswith(v, "Bearer ")
 	t := substring(v, count("Bearer "), -1)
+	print(t)
 }
 
 claims := payload {
