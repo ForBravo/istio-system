@@ -1,5 +1,6 @@
 package policy.ingress
 
+import future.keywords
 # Add policy/rules to allow or deny ingress traffic
 
 default allow = false
